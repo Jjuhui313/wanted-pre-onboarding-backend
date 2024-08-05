@@ -1,6 +1,8 @@
 package com.example.wantedpreonboardingbackend.notice.entity;
 
 import com.example.wantedpreonboardingbackend.company.entity.Company;
+import com.example.wantedpreonboardingbackend.notice.dto.NoticeCreateDto;
+import com.example.wantedpreonboardingbackend.notice.dto.NoticeUpdateDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ public class Notice {
     private String position;
 
     @Column(nullable = false)
-    private int compensation;
+    private Integer compensation;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -30,12 +32,34 @@ public class Notice {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public Notice(Long id, String position, int compensation, TechRole techRole, String content, Company company) {
-        this.id = id;
-        this.position = position;
-        this.compensation = compensation;
-        this.techRole = techRole;
-        this.content = content;
+    public Notice(NoticeCreateDto noticeCreateDto, Company company) {
+        this.position = noticeCreateDto.getPosition();
+        this.compensation = noticeCreateDto.getCompensation();
+        this.techRole = noticeCreateDto.getTech();
+        this.content = noticeCreateDto.getContent();
         this.company = company;
+    }
+
+    public Notice(NoticeUpdateDto noticeUpdateDto, Company company) {
+        this.position = noticeUpdateDto.getPosition();
+        this.compensation = noticeUpdateDto.getCompensation();
+        this.techRole = noticeUpdateDto.getTech();
+        this.content = noticeUpdateDto.getContent();
+        this.company = company;
+    }
+
+    public void update(String position, Integer compensation, String content, TechRole techRole) {
+        if (position != null) {
+            this.position = position;
+        }
+        if (compensation != null) {
+            this.compensation = compensation;
+        }
+        if (content != null) {
+            this.content = content;
+        }
+        if (techRole != null) {
+            this.techRole = techRole;
+        }
     }
 }

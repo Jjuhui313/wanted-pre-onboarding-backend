@@ -8,7 +8,7 @@ public enum CountryRole {
     USA("미국"),
     JAPAN("일본");
 
-    private String krName;
+    private final String krName;
 
     CountryRole(String krName) {
         this.krName = krName;
